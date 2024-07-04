@@ -96,12 +96,14 @@ def main():
 
     limiar_confianca = 0.5 # valor inicial do limiar de confiança
 
+
     def ajustar_limiar(valor):
         nonlocal limiar_confianca
         limiar_confianca = valor / 100
 
     cv2.namedWindow('Detecta Objetos')
-    cv2.createTrackbar('Limiar de Confiança', 'Detecta Objetos', int(limiar_confianca * 100), 100, ajustar_limiar)
+    if TINY:
+        cv2.createTrackbar('Limiar de Confiança', 'Detecta Objetos', int(limiar_confianca * 100), 100, ajustar_limiar)
 
     try:
         while True:
