@@ -55,6 +55,12 @@ print(f"OpenCV version: {cv2.__version__}")
 print(f"NumPy version: {np.__version__}")
 ```
 
+## Sugestão de Estudos por Diretórios
+
+1. vagas
+2. reconhecimento-faces
+3. deteccao-objetos
+
 ## Desativação do Ambiente Virtual
 
 Quando terminar de trabalhar no projeto, você pode desativar o ambiente virtual com o comando:
