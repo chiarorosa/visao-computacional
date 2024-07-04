@@ -1,20 +1,24 @@
 import cv2
 import numpy as np
 
+# Variável para definir se o modelo é YOLOv3-tiny ou não
+TINY = False
+
+# Configurações do modelo YOLOv3 ou YOLOv3-tiny
+ARQUIVO_CFG = "deteccao-objetos/yolov3{}.cfg".format("-tiny" if TINY else "")
+ARQUIVO_PESOS = "deteccao-objetos/yolov3{}.weights".format("-tiny" if TINY else "")
+ARQUIVO_CLASSES = "deteccao-objetos/coco{}.names".format("-tiny" if TINY else "")
+
 # Carregar os nomes das classes
-with open("deteccao-objetos/coco.names", "r") as arquivo:
+with open(ARQUIVO_CLASSES, "r") as arquivo:
     CLASSES = [linha.strip() for linha in arquivo.readlines()]
 
 # Gerar cores diferentes para cada classe
 CORES = np.random.uniform(0, 255, size=(len(CLASSES), 3))
 
-# Configurações do modelo YOLOv3
-ARQUIVO_CFG = "deteccao-objetos/yolov3.cfg"
-ARQUIVO_PESOS = "deteccao-objetos/yolov3.weights"
-
 def carregar_modelo_pretreinado():
     """
-    Carrega o modelo YOLOv3 pré-treinado e configurações associadas ao OpenCV.
+    Carrega o modelo YOLOv3-tiny pré-treinado e configurações associadas ao OpenCV.
     """
     modelo = cv2.dnn.readNetFromDarknet(ARQUIVO_CFG, ARQUIVO_PESOS)
     modelo.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
@@ -81,7 +85,7 @@ def main():
     """
     print("Inicializando o detector de objetos...")
     modelo = carregar_modelo_pretreinado()
-    captura_video = cv2.VideoCapture(1) # 0 para webcam padrão
+    captura_video = cv2.VideoCapture(0) # 0 para webcam padrão
 
     if not captura_video.isOpened():
         raise Exception("Não foi possível abrir a webcam.")
@@ -90,6 +94,15 @@ def main():
     captura_video.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
     captura_video.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
 
+    limiar_confianca = 0.5 # valor inicial do limiar de confiança
+
+    def ajustar_limiar(valor):
+        nonlocal limiar_confianca
+        limiar_confianca = valor / 100
+
+    cv2.namedWindow('Detecta Objetos')
+    cv2.createTrackbar('Limiar de Confiança', 'Detecta Objetos', int(limiar_confianca * 100), 100, ajustar_limiar)
+
     try:
         while True:
             ret, frame = captura_video.read()
@@ -97,7 +110,7 @@ def main():
                 break
             
             deteccoes = detectar_objetos(frame, modelo)
-            desenhar_deteccoes(frame, deteccoes)
+            desenhar_deteccoes(frame, deteccoes, limiar_confianca)
 
             cv2.imshow('Detecta Objetos', frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
