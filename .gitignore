@@ -4,3 +4,4 @@ env-visao/
 # Ignorar arquivo de pesos do modelo
 yolov3.weights
 yolov3-tiny.weights
+frozen_inference_graph.pb
