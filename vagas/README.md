@@ -1,6 +1,6 @@
-````markdown
 # Visão Computacional para Monitoramento de Vagas de Estacionamento
 
+````markdown
 Este projeto utiliza técnicas de visão computacional para monitorar e identificar vagas de estacionamento disponíveis em um vídeo. Ele processa cada quadro do vídeo, identifica as regiões de interesse (vagas) e destaca seu status (livre, ocupado ou quase ocupado).
 
 ## Função `processa_frame`
