@@ -2,7 +2,6 @@
 
 Projeto criado para disciplina Fundamentos de Inteligência Artificial (FIA) - Graduação. Prof. Pablo De Chiaro
 
-````markdown
 Este projeto configura um ambiente virtual Python e instala as bibliotecas necessárias para um projeto de Visão Computacional.
 
 ## Configuração do Ambiente Virtual
@@ -14,6 +13,7 @@ Este projeto configura um ambiente virtual Python e instala as bibliotecas neces
    ```bash
    python -m venv env-visao
    ```
+
 ````
 
 2. **Ativar o ambiente virtual:**
@@ -66,3 +66,4 @@ deactivate
 ```
 
 ---
+````

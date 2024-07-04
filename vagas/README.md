@@ -1,6 +1,5 @@
 # Visão Computacional para Monitoramento de Vagas de Estacionamento
 
-````markdown
 Este projeto utiliza técnicas de visão computacional para monitorar e identificar vagas de estacionamento disponíveis em um vídeo. Ele processa cada quadro do vídeo, identifica as regiões de interesse (vagas) e destaca seu status (livre, ocupado ou quase ocupado).
 
 ## Função `processa_frame`
@@ -19,6 +18,7 @@ def processa_frame(img):
     img_dil = cv2.dilate(img_blur, kernel)
     return img_dil
 ```
+
 ````
 
 ### Descrição das Etapas
@@ -104,3 +104,4 @@ Região de interesse 1: x=124, y=81, w=123, h=223
 Região de interesse 2: x=282, y=86, w=127, h=215
 ...
 ```
+````
