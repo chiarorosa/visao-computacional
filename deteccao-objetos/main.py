@@ -2,108 +2,108 @@ import cv2
 import numpy as np
 
 # Carregar os nomes das classes
-with open("deteccao-objetos/coco.names", "r") as f:
-    CLASSES = [line.strip() for line in f.readlines()]
+with open("deteccao-objetos/coco.names", "r") as arquivo:
+    CLASSES = [linha.strip() for linha in arquivo.readlines()]
 
-# Gera cores diferentes para cada classe
-COLORS = np.random.uniform(0, 255, size=(len(CLASSES), 3))
+# Gerar cores diferentes para cada classe
+CORES = np.random.uniform(0, 255, size=(len(CLASSES), 3))
 
 # Configurações do modelo YOLOv3
-CFG = "deteccao-objetos/yolov3.cfg"
-WEIGHTS = "deteccao-objetos/yolov3.weights"
+ARQUIVO_CFG = "deteccao-objetos/yolov3.cfg"
+ARQUIVO_PESOS = "deteccao-objetos/yolov3.weights"
 
-def load_pretrained_model():
+def carregar_modelo_pretreinado():
     """
-    Carrega o modelo YOLOv3 pré-treinado e configurações associadas axso OpenCV.
+    Carrega o modelo YOLOv3 pré-treinado e configurações associadas ao OpenCV.
     """
-    model = cv2.dnn.readNetFromDarknet(CFG, WEIGHTS)
-    model.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
-    model.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
-    if model.empty():
+    modelo = cv2.dnn.readNetFromDarknet(ARQUIVO_CFG, ARQUIVO_PESOS)
+    modelo.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
+    modelo.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
+    if modelo.empty():
         raise IOError("Não foi possível carregar o modelo de detecção de objetos.")
-    return model
+    return modelo
 
-def preprocess_frame(frame):
+def preprocessar_frame(frame):
     """
     Pré-processa o frame para detecção: redimensiona e normaliza.
     """
     blob = cv2.dnn.blobFromImage(frame, scalefactor=1/255.0, size=(416, 416), swapRB=True, crop=False)
     return blob
 
-def detect_objects(frame, model):
+def detectar_objetos(frame, modelo):
     """
     Detecta objetos no frame usando o modelo carregado.
     """
-    blob = preprocess_frame(frame)
-    model.setInput(blob)
-    layer_names = model.getLayerNames()
-    output_layers = [layer_names[i - 1] for i in model.getUnconnectedOutLayers()]
-    outputs = model.forward(output_layers)
-    return outputs
+    blob = preprocessar_frame(frame)
+    modelo.setInput(blob)
+    nomes_camadas = modelo.getLayerNames()
+    camadas_saida = [nomes_camadas[i - 1] for i in modelo.getUnconnectedOutLayers()]
+    saidas = modelo.forward(camadas_saida)
+    return saidas
 
-def draw_detections(frame, detections, threshold=0.5):
+def desenhar_deteccoes(frame, deteccoes, limiar=0.5):
     """
     Desenha retângulos ao redor dos objetos detectados com confiança acima do limiar.
     """
-    (h, w) = frame.shape[:2]
-    boxes = []
-    confidences = []
-    class_ids = []
+    (altura, largura) = frame.shape[:2]
+    caixas = []
+    confiancas = []
+    ids_classes = []
 
-    for output in detections:
-        for detection in output:
-            scores = detection[5:]
-            class_id = np.argmax(scores)
-            confidence = scores[class_id]
-            if confidence > threshold:
-                box = detection[0:4] * np.array([w, h, w, h])
-                (centerX, centerY, width, height) = box.astype("int")
-                x = int(centerX - (width / 2))
-                y = int(centerY - (height / 2))
+    for saida in deteccoes:
+        for deteccao in saida:
+            pontuacoes = deteccao[5:]
+            id_classe = np.argmax(pontuacoes)
+            confianca = pontuacoes[id_classe]
+            if confianca > limiar:
+                caixa = deteccao[0:4] * np.array([largura, altura, largura, altura])
+                (centroX, centroY, largura_caixa, altura_caixa) = caixa.astype("int")
+                x = int(centroX - (largura_caixa / 2))
+                y = int(centroY - (altura_caixa / 2))
 
-                boxes.append([x, y, int(width), int(height)])
-                confidences.append(float(confidence))
-                class_ids.append(class_id)
+                caixas.append([x, y, int(largura_caixa), int(altura_caixa)])
+                confiancas.append(float(confianca))
+                ids_classes.append(id_classe)
 
-    indices = cv2.dnn.NMSBoxes(boxes, confidences, threshold, threshold - 0.1)
+    indices = cv2.dnn.NMSBoxes(caixas, confiancas, limiar, limiar - 0.1)
     if len(indices) > 0:
         for i in indices.flatten():
-            (x, y) = (boxes[i][0], boxes[i][1])
-            (w, h) = (boxes[i][2], boxes[i][3])
-            color = [int(c) for c in COLORS[class_ids[i]]]
-            cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
-            text = f"{CLASSES[class_ids[i]]}: {confidences[i]:.2f}"
-            cv2.putText(frame, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+            (x, y) = (caixas[i][0], caixas[i][1])
+            (largura_caixa, altura_caixa) = (caixas[i][2], caixas[i][3])
+            cor = [int(c) for c in CORES[ids_classes[i]]]
+            cv2.rectangle(frame, (x, y), (x + largura_caixa, y + altura_caixa), cor, 2)
+            texto = f"{CLASSES[ids_classes[i]]}: {confiancas[i]:.2f}"
+            cv2.putText(frame, texto, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, cor, 2)
 
 def main():
     """
     Executa a detecção de objetos em tempo real usando a webcam.
     """
     print("Inicializando o detector de objetos...")
-    model = load_pretrained_model()
-    video_capture = cv2.VideoCapture(0) # 0 para webcam padrão
+    modelo = carregar_modelo_pretreinado()
+    captura_video = cv2.VideoCapture(1) # 0 para webcam padrão
 
-    if not video_capture.isOpened():
+    if not captura_video.isOpened():
         raise Exception("Não foi possível abrir a webcam.")
 
     # Reduzir a resolução do vídeo capturado
-    video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
-    video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+    captura_video.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+    captura_video.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
 
     try:
         while True:
-            ret, frame = video_capture.read()
+            ret, frame = captura_video.read()
             if not ret:
                 break
             
-            detections = detect_objects(frame, model)
-            draw_detections(frame, detections)
+            deteccoes = detectar_objetos(frame, modelo)
+            desenhar_deteccoes(frame, deteccoes)
 
             cv2.imshow('Detecta Objetos', frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
     finally:
-        video_capture.release()
+        captura_video.release()
         cv2.destroyAllWindows()
 
 if __name__ == "__main__":
