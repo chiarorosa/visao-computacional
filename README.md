@@ -14,8 +14,6 @@ Este projeto configura um ambiente virtual Python e instala as bibliotecas neces
    python -m venv env-visao
    ```
 
-````
-
 2. **Ativar o ambiente virtual:**
 
    No macOS e Linux:
@@ -66,4 +64,7 @@ deactivate
 ```
 
 ---
-````
+
+```
+
+```

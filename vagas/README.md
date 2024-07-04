@@ -19,8 +19,6 @@ def processa_frame(img):
     return img_dil
 ```
 
-````
-
 ### Descrição das Etapas
 
 1. **Conversão para Escala de Cinza (`cv2.cvtColor`)**:
@@ -104,4 +102,7 @@ Região de interesse 1: x=124, y=81, w=123, h=223
 Região de interesse 2: x=282, y=86, w=127, h=215
 ...
 ```
-````
+
+```
+
+```
