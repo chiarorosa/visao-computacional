@@ -1,2 +1,5 @@
 .DS_Store
 env-visao/
+
+# Ignorar arquivo de pesos do modelo
+yolov3.weights
