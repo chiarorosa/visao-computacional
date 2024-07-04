@@ -32,6 +32,10 @@ Este código faz o seguinte:
 4. **Desenha as detecções nos frames**:
    Desenha caixas delimitadoras ao redor dos objetos detectados, juntamente com a classe e a confiança da detecção.
 
+### COCO
+
+Common Objects in Context: https://cocodataset.org/#overview
+
 ### DNN (Deep Neural Network) no OpenCV
 
 A DNN (Deep Neural Network) é uma biblioteca no OpenCV que permite o uso de redes neurais profundas para diversas tarefas de visão computacional, como classificação de imagens, detecção de objetos, e segmentação semântica. A API DNN do OpenCV oferece uma interface para carregar e executar modelos treinados em diferentes frameworks de deep learning, como Caffe, TensorFlow, PyTorch e Darknet. Ela suporta tanto a CPU quanto a GPU, tornando-a flexível e eficiente para aplicações em tempo real.
