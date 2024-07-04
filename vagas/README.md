@@ -62,3 +62,45 @@ def processa_frame(img):
 
 - Certifique-se de que o vídeo (`parkinglot.mp4`) está no diretório correto.
 - Adapte os parâmetros de processamento conforme necessário para seu cenário específico.
+
+Claro! Aqui está um exemplo de um `README.md` curto e direto ao ponto para o seu projeto de seleção de múltiplas regiões de interesse (ROIs) em um vídeo:
+
+# Seleção de Múltiplas Regiões de Interesse (ROIs)
+
+Permite selecionar múltiplas regiões de interesse (ROIs) em um quadro específico de um vídeo. As ROIs selecionadas são exibidas e suas coordenadas são impressas no terminal.
+
+### Executando o Script
+
+1. **Defina o caminho para o seu vídeo e o número do quadro a ser capturado no script `roi.py`:**
+
+```python
+# Caminho para o vídeo
+video_path = 'vagas/parkinglot.mp4'
+
+# Número do quadro a ser capturado
+frame_number = 100  # Altere para o número do quadro que você deseja capturar
+```
+
+2. **Execute o script `roi.py`:**
+
+```bash
+python roi.py
+```
+
+3. **Selecione as regiões de interesse:**
+
+   - Uma janela será aberta com o quadro do vídeo.
+   - Use o mouse para desenhar retângulos nas áreas de interesse.
+   - Pressione `Enter` para confirmar cada seleção.
+   - Para selecionar mais outra região, pressione `Enter` novamente.
+   - Para sair do modo de seleção, pressione a tecla `q` para cada seleção feita.
+
+### Exemplo de Saída
+
+O script imprimirá as coordenadas das regiões de interesse selecionadas no terminal:
+
+```
+Região de interesse 1: x=124, y=81, w=123, h=223
+Região de interesse 2: x=282, y=86, w=127, h=215
+...
+```
