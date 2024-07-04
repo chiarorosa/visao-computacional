@@ -62,9 +62,3 @@ Quando terminar de trabalhar no projeto, você pode desativar o ambiente virtual
 ```bash
 deactivate
 ```
-
----
-
-```
-
-```
