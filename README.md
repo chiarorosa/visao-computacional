@@ -60,6 +60,7 @@ print(f"NumPy version: {np.__version__}")
 1. vagas
 2. reconhecimento-faces
 3. deteccao-objetos
+4. rastreio-pessoas
 
 ## Desativação do Ambiente Virtual
 
