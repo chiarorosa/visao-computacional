@@ -1,7 +1,32 @@
+# Ignorar arquivos e diretórios específicos do sistema
 .DS_Store
+
+# Ignorar diretórios de ambientes virtuais
 env-visao/
 
-# Ignorar arquivo de pesos do modelo
+# Ignorar arquivos de pesos de modelos
 yolov3.weights
 yolov3-tiny.weights
 frozen_inference_graph.pb
+
+# Ignorar arquivos de log e de saída do Jupyter Notebook
+*.log
+*.out
+
+# Ignorar arquivos temporários do sistema operacional
+*.swp
+*.swo
+*.tmp
+
+# Ignorar diretórios de cache
+__pycache__/
+*.pyc
+
+# Ignorar arquivos gerados por editores
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Ignorar arquivos de configuração do Git
+.gitconfig
