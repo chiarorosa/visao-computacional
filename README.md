@@ -69,3 +69,9 @@ Quando terminar de trabalhar no projeto, você pode desativar o ambiente virtual
 ```bash
 deactivate
 ```
+
+## Referências e Leitura
+
+YoloV3:
+
+- YoloV3: [yolov3.cfg](https://pjreddie.com/darknet/yolo/)
