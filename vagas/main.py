@@ -28,7 +28,7 @@ def processa_frame(img):
     img_blur = cv2.medianBlur(img_threshold, 5)
     kernel = np.ones((3, 3), np.int8)
     img_dil = cv2.dilate(img_blur, kernel)
-    return img_dil
+    return [img_dil, img_cinza]
 
 def verifica_vagas(img, img_dil, vagas):
     """
@@ -75,11 +75,18 @@ def main():
             break
 
         img_dil = processa_frame(img)
-        qt_vagas_abertas = verifica_vagas(img, img_dil, VAGAS)
+        qt_vagas_abertas = verifica_vagas(img, img_dil[0], VAGAS)
         exibe_status(img, qt_vagas_abertas, NUM_VAGAS)
 
         cv2.imshow('Video', img)
-        cv2.imshow('Processamento', img_dil)
+        
+        cv2.namedWindow('Processamento', cv2.WINDOW_NORMAL)
+        cv2.resizeWindow('Processamento', 350, 200)
+        cv2.imshow('Processamento', img_dil[0])
+        
+        cv2.namedWindow('Passo', cv2.WINDOW_NORMAL)
+        cv2.resizeWindow('Passo', 350, 200)
+        cv2.imshow('Passo', img_dil[1])
 
         if cv2.waitKey(DELAY) == ord('q'):
             break

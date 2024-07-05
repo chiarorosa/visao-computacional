@@ -38,6 +38,8 @@ def main():
     if not captura_de_video.isOpened():
         raise Exception("Não foi possível abrir a webcam.")
     
+    print('\033[1;31;43m' + 'Buscando faces...' + '\033[0;39;49m')
+    
     try:
         while True:
             ret, quadro = captura_de_video.read()
