@@ -73,4 +73,5 @@ deactivate
 ## Referências e Leitura
 
 - (Ref) YoloV3: [yolov3.cfg](https://pjreddie.com/darknet/yolo/)
-- (Leitura) SSD MobileNetV2: (https://medium.com/@techmayank2000/object-detection-using-ssd-mobilenetv2-using-tensorflow-api-can-detect-any-single-class-from-31a31bbd0691)
+- (Leitura) SSD MobileNetV2: (https://arxiv.org/abs/1512.02325)
+- (Leitura) SSD MobileNetV2 Object Detection: (https://medium.com/@techmayank2000/object-detection-using-ssd-mobilenetv2-using-tensorflow-api-can-detect-any-single-class-from-31a31bbd0691)
