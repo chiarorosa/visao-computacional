@@ -1,54 +1,58 @@
 import cv2
 
-def initialize_face_detector():
+def inicializar_detector_de_faces():
     """
     Inicializa o detector de faces com o modelo pré-treinado do OpenCV.
     """
-    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-    if face_cascade.empty():
+    classificador_de_faces = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+    if classificador_de_faces.empty():
         raise IOError("Não foi possível carregar o modelo de detecção de faces.")
-    return face_cascade
+    return classificador_de_faces
 
-def detect_faces(frame, face_cascade):
+def detectar_faces(quadro, classificador_de_faces):
     """
-    Detecta faces no frame utilizando o modelo carregado.
+    Detecta faces no quadro utilizando o modelo carregado.
     """
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30), flags=cv2.CASCADE_SCALE_IMAGE)
+    cinza = cv2.cvtColor(quadro, cv2.COLOR_BGR2GRAY)
+    faces = classificador_de_faces.detectMultiScale(cinza, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30), flags=cv2.CASCADE_SCALE_IMAGE)
     return faces
 
-def draw_faces(frame, faces):
+def desenhar_faces(quadro, faces):
     """
     Desenha um quadrado ao redor das faces detectadas.
     """
-    for (x, y, w, h) in faces:
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (245, 255, 0), 2) # BGR
+    for (x, y, largura, altura) in faces:
+        cv2.rectangle(quadro, (x, y), (x + largura, y + altura), (245, 255, 0), 2) # BGR
 
 def main():
     """
     Função principal que realiza o reconhecimento de faces em tempo real.
     """
-    face_cascade = initialize_face_detector()
-    video_capture = cv2.VideoCapture(1) # 0 para webcam padrão
+    classificador_de_faces = inicializar_detector_de_faces()
+    captura_de_video = cv2.VideoCapture(1) # 0 para webcam padrão
+    
+    # Reduzir a resolução do vídeo capturado
+    captura_de_video.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+    captura_de_video.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
 
-    if not video_capture.isOpened():
+    if not captura_de_video.isOpened():
         raise Exception("Não foi possível abrir a webcam.")
     
     try:
         while True:
-            ret, frame = video_capture.read()
+            ret, quadro = captura_de_video.read()
             if not ret:
                 break
 
-            faces = detect_faces(frame, face_cascade)
-            draw_faces(frame, faces)
+            faces = detectar_faces(quadro, classificador_de_faces)
+            desenhar_faces(quadro, faces)
 
-            cv2.imshow('Reconhecimento de Faces', frame)
+            cv2.imshow('Reconhecimento de Faces', quadro)
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
     finally:
-        video_capture.release()
+        captura_de_video.release()
         cv2.destroyAllWindows()
 
 if __name__ == "__main__":
