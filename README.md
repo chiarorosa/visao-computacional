@@ -58,7 +58,7 @@ print(f"NumPy version: {np.__version__}")
 ## Sugestão de Estudos por Diretórios
 
 1. vagas
-2. reconhecimento-faces
+2. reconhecimento-faces (use primeiro o `verifica_cameras.py`)
 3. deteccao-objetos
 4. rastreio-pessoas
 
