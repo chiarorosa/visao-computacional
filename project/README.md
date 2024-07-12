@@ -1,3 +1,13 @@
-# Projeto de Final
+# Curso de Análise e Desenvolvimento de Sistemas - UNISENAC - 2024/1
 
-Projeto criado para disciplina Fundamentos de InteligÃªncia Artificial (FIA) - GraduaÃ§Ã£o. Prof. Pablo De Chiaro
+#Integrante
+
+Jennifer Schwanz Torchelsen
+
+#Orientador
+
+Prof. Pablo De Chiaro
+
+#Projeto de ?
+
+#Motivação
