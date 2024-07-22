@@ -18,7 +18,3 @@ Este projeto utiliza técnicas de visão computacional para contar o número de pes
 - Detecção de pessoas utilizando o detector HOG do OpenCV
 - Contagem em tempo real do número de pessoas na fila
 - Exibição visual do resultado no vídeo
-
-## Contribuições
-
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
