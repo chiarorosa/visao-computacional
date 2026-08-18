@@ -1,3 +1,5 @@
+
+
 # Projeto de Visão Computacional
 
 Projeto criado para disciplina Fundamentos de Inteligência Artificial (FIA) - Graduação. Prof. Pablo De Chiaro
@@ -58,7 +60,7 @@ print(f"NumPy version: {np.__version__}")
 ## Sugestão de Estudos por Diretórios
 
 1. vagas
-2. reconhecimento-faces (use primeiro o `verifica_cameras.py`)
+2. reconhecimento-faces (use primeiro o `python reconhecimento-faces/verifica_cameras.py`)
 3. deteccao-objetos
 4. rastreio-pessoas
 
